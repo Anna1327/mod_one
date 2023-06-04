@@ -11,12 +11,12 @@ else
 end
 
 if d.positive?
-  х1 = (-b + square_root) / (2 * a)
+  x1 = (-b + square_root) / (2 * a)
   x2 = (-b - square_root) / (2 * a)
-  puts "Дискриминант больше нуля, х1 = #{х1}, х2 = #{x2}"
+  puts "Дискриминант больше нуля, х1 = #{x1}, х2 = #{x2}"
 elsif d.zero?
-  х = -b / (2 * a)
-  puts "Дискриминант равен нулю, х = #{х}"
+  x = -b / (2 * a)
+  puts "Дискриминант равен нулю, х = #{x}"
 elsif d.negative?
-  puts "Нет корней"
+  puts "Дискриминант меньше нуля, нет корней"
 end
