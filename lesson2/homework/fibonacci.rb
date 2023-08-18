@@ -1,12 +1,17 @@
-prev_value = 0
-last_value = prev_value + 1
-fibonacci = [prev_value, last_value]
-loop do 
-  number = prev_value + last_value
-  break if number > 100
+# frozen_string_literal: true
 
-  fibonacci.push(number)
-  prev_value = last_value
-  last_value = number
+# 3 fibonacci numbers from 1 to 100
+
+fibonacci = []
+count = 1
+
+def fib(number)
+  number <= 1 ? number : fib(number - 1) + fib(number - 2)
+end
+
+while fib(count) < 101
+  num = fib(count)
+  count += 1
+  fibonacci << num
 end
 puts fibonacci

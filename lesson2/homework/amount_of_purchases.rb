@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# 6 amount of purchases
+
 amount_of_purchases = {}
 
 loop do
