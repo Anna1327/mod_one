@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 class Station
-  attr_reader :trains, :name
+  attr_reader :trains
 
   def initialize(name)
     @name = name
     @trains = []
   end
 
-  def take_train(train)
+  def receive_train(train)
     @trains << train
   end
 
-  def send_train(train)
+  def depart_train(train)
     @trains.delete(train)
   end
 
@@ -20,9 +20,15 @@ class Station
     @trains.each { |train| puts train.number }
   end
 
-  def train_list
-    cargo_trains = @trains.select { |train| train.type == "cargo" }
-    passenger_trains = @trains.select { |train| train.type == "passenger" }
-    puts "Cargo trains: #{cargo_trains.coint}, passenger trains: #{passenger_trains.coint}"
+  def get_trains_by_type(type)
+    @trains.select { |train| train.type == type }
+  end
+
+  def passenger_trains
+    get_trains_by_type("passenger")
+  end
+
+  def cargo_trains
+    get_trains_by_type("cargo")
   end
 end

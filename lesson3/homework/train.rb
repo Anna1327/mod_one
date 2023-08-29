@@ -1,56 +1,67 @@
 # frozen_string_literal: true
 
 class Train
-  attr_accessor :speed, :wagons
-
-  attr_writter :route
+  attr_accessor :speed
+  attr_reader :wagons, :type
 
   def initialize(number, type, wagons)
     @number = number
     @type = type
     @wagons = wagons
+    @speed = 0
+    @route = nil
   end
 
   def pick_up_speed(speed)
-    self.speed = speed
+    @speed = speed
   end
 
   def brake
-    self.speed = 0
+    @speed = 0
   end
 
   def hitch_wagons
-    self.wagons += 1 if speed.zero?
+    @wagons += 1 if speed.zero?
   end
 
   def unhitch_wagons
-    self.wagons -= 1 if speed.zero?
+    @wagons -= 1 if speed.zero?
   end
 
-  def assignee_route(route)
+  def assign_route(route)
     @route = route
-    @route.current_station.take_train(self)
+    @current_station_index = 0
+    current_station = @route.get_station_by_index(@current_station_index)
+    current_station.receive_train(self)
   end
 
-  def prev_station
-    @route.prev_station
+  def previous_station
+    @route.get_station_by_index(@current_station_index - 1) unless @current_station_index.zero?
   end
 
   def next_station
-    @route.next_station
+    @route.get_station_by_index(@current_station_index + 1) if @current_station_index < @route.stations.size - 1
   end
 
   def current_station
-    @route.current_station
+    @route.get_station_by_index(@current_station_index)
   end
 
   def move_to_prev_station
-    current_station.send_train(self)
-    prev_station.take_train(self)
+    return unless previous_station
+
+    current_station = @route.get_station_by_index(@current_station_index)
+    current_station.depart_train(self)
+    @current_station_index -= 1
+    current_station.receive_train(self)
   end
 
   def move_to_next_station
-    current_station.send_train(self)
-    next_station.take_train(self)
+    return unless next_station
+
+    current_station = @route.get_station_by_index(@current_station_index)
+    current_station.depart_train(self)
+    @current_station_index += 1
+    current_station.receive_train(self)
   end
 end
